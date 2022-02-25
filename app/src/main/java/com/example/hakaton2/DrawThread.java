@@ -20,7 +20,7 @@ public class DrawThread extends Thread{
     }
 
     private boolean change = false;
-    private boolean firstTime = true;
+    private boolean firstTime = false;
 
     public void click(){
         change = !change;
@@ -37,11 +37,32 @@ public class DrawThread extends Thread{
                     Paint paint = new Paint();
                     paint.setColor(Color.WHITE);
                     canvas.drawRect(0, 0, canvas.getHeight(), canvas.getHeight(), paint);
-                    
-                    paint.setColor(Color.GREEN);
-                    canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2 - 300, radius, paint);
+
                     if(change){
                         if(firstTime) {
+                            paint.setColor(Color.RED);
+                            canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2 - 300, radius, paint);
+                            sleep(1000);
+                            paint.setColor(Color.BLACK);
+                            paint.setTextSize(50);
+                            canvas.drawText("1", canvas.getWidth() / 2, canvas.getHeight() / 2, paint);
+                            surfaceHolder.unlockCanvasAndPost(canvas);
+                            surfaceHolder.lockCanvas();
+                            sleep(1000);
+                            canvas.drawText("2", canvas.getWidth() / 2, canvas.getHeight() / 2, paint);
+                            surfaceHolder.unlockCanvasAndPost(canvas);
+                            surfaceHolder.lockCanvas();
+                            sleep(1000);
+                            canvas.drawText("3", canvas.getWidth() / 2, canvas.getHeight() / 2, paint);
+                            firstTime = false;
+                        }
+                        paint.setColor(Color.GREEN);
+                        canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2 - 300, radius, paint);
+                    }
+                    else{
+                        if(firstTime) {
+                            paint.setColor(Color.GREEN);
+                            canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2 - 300, radius, paint);
                             sleep(1000);
                             paint.setColor(Color.BLACK);
                             paint.setTextSize(50);
@@ -58,6 +79,7 @@ public class DrawThread extends Thread{
                         }
                         paint.setColor(Color.RED);
                         canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2 - 300, radius, paint);
+
                     }
 
                 } catch (InterruptedException e) {
